@@ -17,17 +17,24 @@ export default class Pawn extends Piece {
 
         if (this.player == Player.WHITE) {
             if (!this.moved) {
-                availableMoves.push(new Square(square.row + 2, square. col));
+                availableMoves.push(new Square(square.row + 2, square.col));
             }
-            availableMoves.push(new Square(square.row + 1, square. col));
+            availableMoves.push(new Square(square.row + 1, square.col));
         } else {
             if (!this.moved) {
-                availableMoves.push(new Square(square.row - 2, square. col));
+                availableMoves.push(new Square(square.row - 2, square.col));
             }
-            availableMoves.push(new Square(square.row - 1, square. col));
+            availableMoves.push(new Square(square.row - 1, square.col));
         }
 
-        return availableMoves;
+        let newAvailableMoves: Array<Square> = [];
+        for (let move of availableMoves) {
+            if (board.getPiece(move) === undefined) {
+                newAvailableMoves.push(move);
+            }
+        }
+
+        return newAvailableMoves;
     }
 
     public moveTo(board: Board, newSquare: Square) {

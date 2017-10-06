@@ -5,10 +5,11 @@ import Player from '../../../src/engine/player';
 import Square from '../../../src/engine/square';
 
 describe('Pawn', () => {
-    describe('white pawns', () => {
 
-        let board: Board;
-        beforeEach(() => board = new Board(Player.WHITE));
+    let board: Board;
+    beforeEach(() => board = new Board(Player.WHITE));
+
+    describe('white pawns', () => {
         
         it('can only move one square up if they have already moved', () => {
             const pawn = new Pawn(Player.WHITE);
