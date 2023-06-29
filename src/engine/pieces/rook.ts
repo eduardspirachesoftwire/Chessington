@@ -2,6 +2,7 @@ import Piece from './piece';
 import Player from '../player';
 import Board from '../board';
 import Square from "../square";
+import King from "./king";
 
 export default class Rook extends Piece {
     public constructor(player: Player) {
@@ -40,6 +41,13 @@ export default class Rook extends Piece {
             }
         }
 
-        return availableMoves;
+        let updatedMoves: Array<Square> = [];
+        for (let move of availableMoves) {
+            if (board.getPiece(move) instanceof King || board.getPiece(move)?.player === this.player) {
+                continue;
+            }
+            updatedMoves.push(move);
+        }
+        return updatedMoves;
     }
 }
