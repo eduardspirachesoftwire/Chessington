@@ -3,6 +3,7 @@ import Player from '../player';
 import Board from '../board';
 import Square from "../square";
 import player from "../player";
+import King from "./king";
 
 export default class Pawn extends Piece {
     private moved: boolean;
@@ -39,6 +40,7 @@ export default class Pawn extends Piece {
         }
         return true;
     }
+
     public getAvailableMoves(board: Board) {
         let availableMoves: Array<Square> = [];
         let square: Square = board.findPiece(this);
@@ -55,7 +57,26 @@ export default class Pawn extends Piece {
             availableMoves.push(new Square(square.row - 1, square.col));
         }
 
-        return availableMoves;
+        for (let i = -1; i <= 1; i += 2) {
+            for (let j = -1; j <= 1; j += 2) {
+                if (square.row + i < 8 && square.row + i >= 0 &&
+                    square.col + i < 8 && square.col + 1 >= 0) {
+                    let tempSquare: Square = new Square(square.row + i, square.col + j);
+                    if (board.getPiece(tempSquare)) {
+                        availableMoves.push(tempSquare);
+                    }
+                }
+            }
+        }
+
+        let updatedMoves: Array<Square> = [];
+        for (let move of availableMoves) {
+            if (board.getPiece(move) instanceof King || board.getPiece(move)?.player === this.player) {
+                continue;
+            }
+            updatedMoves.push(move);
+        }
+        return updatedMoves;
     }
 
     public moveTo(board: Board, newSquare: Square) {

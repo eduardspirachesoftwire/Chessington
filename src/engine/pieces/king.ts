@@ -37,7 +37,13 @@ export default class King extends Piece {
             availableMoves.push(new Square(square.row, square.col - 1));
         }
 
-
-        return availableMoves;
+        let updatedMoves: Array<Square> = [];
+        for (let move of availableMoves) {
+            if (board.getPiece(move) instanceof King || board.getPiece(move)?.player === this.player) {
+                continue;
+            }
+            updatedMoves.push(move);
+        }
+        return updatedMoves;
     }
 }
