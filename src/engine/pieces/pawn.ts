@@ -15,26 +15,21 @@ export default class Pawn extends Piece {
         let availableMoves: Array<Square> = [];
         let square: Square = board.findPiece(this);
 
-        if (this.player == Player.WHITE) {
-            if (!this.moved) {
+        if (this.player == Player.WHITE &&
+                board.getPiece(new Square(square.row + 1, square.col)) === undefined) {
+            if (!this.moved && board.getPiece(new Square(square.row + 2, square.col)) === undefined) {
                 availableMoves.push(new Square(square.row + 2, square.col));
             }
             availableMoves.push(new Square(square.row + 1, square.col));
-        } else {
-            if (!this.moved) {
+        } else if (this.player == Player.BLACK &&
+                board.getPiece(new Square(square.row - 1, square.col)) === undefined) {
+            if (!this.moved && board.getPiece(new Square(square.row - 2, square.col)) === undefined) {
                 availableMoves.push(new Square(square.row - 2, square.col));
             }
             availableMoves.push(new Square(square.row - 1, square.col));
         }
 
-        let newAvailableMoves: Array<Square> = [];
-        for (let move of availableMoves) {
-            if (board.getPiece(move) === undefined) {
-                newAvailableMoves.push(move);
-            }
-        }
-
-        return newAvailableMoves;
+        return availableMoves;
     }
 
     public moveTo(board: Board, newSquare: Square) {

@@ -37,7 +37,7 @@ describe('Pawn', () => {
 
     describe('black pawns', () => {
 
-        let board;
+        let board: Board;
         beforeEach(() => board = new Board(Player.BLACK));    
         
         it('can only move one square down if they have already moved', () => {
